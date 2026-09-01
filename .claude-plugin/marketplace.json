@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "meteof-skills",
+  "description": "Nikita Furletov's public agent skills: data engineering, meteorology, and writing conventions.",
+  "owner": {
+    "name": "Nikita Furletov",
+    "email": "meteofurletov@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "meteof-skills",
+      "source": "./",
+      "description": "Public agent skills: SQL style conventions and reMarkable-friendly PDF layout guidance.",
+      "category": "productivity"
+    }
+  ]
+}

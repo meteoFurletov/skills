@@ -1,0 +1,13 @@
+{
+  "name": "meteof-skills",
+  "description": "Public agent skills by Nikita Furletov. Ships modern-sql-style (SQL DML/DDL formatting conventions) and remarkable-pdf (e-ink PDF layout guidance).",
+  "version": "0.1.0",
+  "author": {
+    "name": "Nikita Furletov",
+    "email": "meteofurletov@gmail.com"
+  },
+  "homepage": "https://github.com/meteoFurletov/skills",
+  "repository": "https://github.com/meteoFurletov/skills",
+  "license": "MIT",
+  "keywords": ["skills", "sql", "clickhouse", "data-engineering", "pdf", "remarkable", "meteorology"]
+}
