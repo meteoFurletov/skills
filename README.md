@@ -27,6 +27,7 @@ ln -s ~/Projects/skills/skills/<name> ~/.claude/skills/<name>
 | --- | --- | --- |
 | [modern-sql-style](skills/modern-sql-style/) | SQL formatting and naming conventions for DML and DDL — lowercase keywords, river alignment, leading commas, column-aligned ClickHouse DDL. | CC BY-SA 4.0 |
 | [remarkable-pdf](skills/remarkable-pdf/) | Laying out readable PDFs for the reMarkable Paper Pro e-ink screen — page geometry, typography, KaTeX math, bookmarks. | MIT |
+| [cloud-agent-workstation](skills/cloud-agent-workstation/) | Standing up a personal always-on cloud box running a self-hosted AI agent — sizing, native-vs-container, mesh-VPN access, verifying services that log nothing on success, teardown. | MIT |
 
 ## Adding a skill
 
