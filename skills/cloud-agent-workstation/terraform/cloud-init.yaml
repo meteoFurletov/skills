@@ -1,0 +1,44 @@
+#cloud-config
+# First-boot OS setup ONLY. No secrets and no application code here: user_data
+# is readable from inside the instance via the metadata service and is stored
+# in Terraform state, so anything sensitive belongs in the manual provisioning
+# step instead (references/provisioning.md).
+
+package_update: true
+package_upgrade: true
+
+packages:
+  - git
+  - curl
+  - ca-certificates
+  - build-essential
+  - ripgrep
+  - jq
+  - tmux
+  - htop
+  - unattended-upgrades
+  - fail2ban
+
+# cloud-init's own swap module — more reliable than fallocate in runcmd, and
+# it writes the /etc/fstab entry so the swapfile survives reboots.
+swap:
+  filename: /swapfile
+  size: ${swap_size_mb * 1024 * 1024}
+
+runcmd:
+  # uv: fast Python toolchain, used by most agent installers
+  - curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local/bin sh
+  # Docker: not present on the plain Ubuntu AMI (some marketplace images have it)
+  - curl -fsSL https://get.docker.com | sh
+  - usermod -aG docker ubuntu
+  # Node LTS: agent tooling and browser harnesses assume it
+  - curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+  - DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
+  # Nobody watches this box day to day — let it patch itself
+  - dpkg-reconfigure -f noninteractive unattended-upgrades
+  - systemctl enable --now fail2ban
+  - systemctl enable --now docker
+  # User systemd units (agent gateway, dashboard) must survive logout
+  - loginctl enable-linger ubuntu
+
+final_message: "cloud-init done after $UPTIME s — now run the provisioning steps"
