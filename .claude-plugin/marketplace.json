@@ -12,6 +12,12 @@
       "source": "./",
       "description": "Public agent skills: SQL style conventions and reMarkable-friendly PDF layout guidance.",
       "category": "productivity"
+    },
+    {
+      "name": "sdlc-loop",
+      "source": "./plugins/sdlc-loop",
+      "description": "A six-stage AI-native SDLC \u2014 intent, spec with Gherkin scenarios, plan, build, review, watch \u2014 as slash commands with opt-in hooks.",
+      "category": "productivity"
     }
   ]
 }

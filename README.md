@@ -1,7 +1,7 @@
 # skills
 
-Agent skills I write and reuse across projects. One repo, one plugin — install it
-once and every skill added later shows up on the next update.
+Agent skills and process tooling I reuse across projects, shipped as two plugins
+from one marketplace — install either, and updates arrive together.
 
 Private / unshareable skills live in the sibling repo `skills-private`.
 
@@ -10,10 +10,18 @@ Private / unshareable skills live in the sibling repo `skills-private`.
 ```bash
 claude plugin marketplace add meteoFurletov/skills
 claude plugin install meteof-skills@meteof-skills
+claude plugin install sdlc-loop@meteof-skills
 ```
 
 Or, from inside a Claude Code session, `/plugin marketplace add meteoFurletov/skills`
-then `/plugin install meteof-skills@meteof-skills`.
+then `/plugin install <name>@meteof-skills`.
+
+## Plugins
+
+| Plugin | What it is |
+| --- | --- |
+| `meteof-skills` | The skills below. The repo root is this plugin. |
+| [sdlc-loop](plugins/sdlc-loop/) | A six-stage AI-native SDLC — intent, spec with Gherkin scenarios, plan, build, review, watch — as slash commands with opt-in hooks. |
 
 To work on a skill locally without installing, symlink it:
 
@@ -22,6 +30,8 @@ ln -s ~/Projects/skills/skills/<name> ~/.claude/skills/<name>
 ```
 
 ## Skills
+
+Shipped in `meteof-skills`.
 
 | Skill | What it does | License |
 | --- | --- | --- |

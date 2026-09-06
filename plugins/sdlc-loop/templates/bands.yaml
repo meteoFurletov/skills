@@ -1,0 +1,29 @@
+# Stage 6 detection bands. Deterministic — no model runs in the detection path.
+#
+# Parsed by a restricted reader (python3 stdlib has no YAML), so this file may
+# use only: top-level `key: value`, and a list of flat `- key: value` maps.
+# No anchors, no nesting beyond that, no multi-line strings.
+
+metric: ci_failure_rate
+
+# Days of history pulled per run.
+window_days: 30
+
+# Refuse to run below this much history. A shorter baseline is noise.
+min_history_days: 30
+min_qualifying_days: 20
+
+# Ignore days with fewer runs than this — one run on a quiet Sunday is a coin
+# flip, not a signal.
+min_runs_per_day: 3
+
+bands:
+  - name: watch
+    sigma: 1
+    action: log
+  - name: investigate
+    sigma: 2
+    action: diagnose
+  - name: act
+    sigma: 3
+    action: propose_pr

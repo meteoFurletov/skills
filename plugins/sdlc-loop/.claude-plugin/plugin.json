@@ -1,0 +1,24 @@
+{
+  "name": "sdlc-loop",
+  "description": "A six-stage AI-native SDLC as commands, skills and opt-in hooks: intent, spec with Gherkin scenarios, plan, build, review, and a deterministic CI-drift watcher. Project-agnostic; every artifact is plain markdown in the project's own git.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Nikita Furletov",
+    "email": "meteofurletov@gmail.com"
+  },
+  "homepage": "https://github.com/meteoFurletov/skills",
+  "repository": "https://github.com/meteoFurletov/skills",
+  "license": "MIT",
+  "keywords": [
+    "sdlc",
+    "workflow",
+    "spec-driven",
+    "gherkin",
+    "bdd",
+    "planning",
+    "code-review",
+    "hooks",
+    "process",
+    "statistical-process-control"
+  ]
+}

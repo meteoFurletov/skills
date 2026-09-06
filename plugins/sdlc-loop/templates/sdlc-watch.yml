@@ -1,0 +1,53 @@
+# Stage 6 detector. Deterministic: watch.py decides, and a model is invoked only
+# once a band is breached.
+#
+# Re-run `/sdlc-loop:init --watch` after upgrading the plugin — this workflow and
+# scripts/sdlc-watch.py are copied into the repo, so they do not upgrade with it.
+name: sdlc-watch
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+  pull-requests: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect
+        id: detect
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 scripts/sdlc-watch.py \
+            --bands .sdlc/bands.yaml \
+            --repo "${{ github.repository }}" \
+            --github-output "$GITHUB_OUTPUT"
+
+      - name: Install Claude Code
+        if: steps.detect.outputs.action == 'diagnose' || steps.detect.outputs.action == 'propose_pr'
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Diagnose and write back
+        if: steps.detect.outputs.action == 'diagnose' || steps.detect.outputs.action == 'propose_pr'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "sdlc-watch"
+          git config user.email "sdlc-watch@users.noreply.github.com"
+          python3 scripts/sdlc-watch.py \
+            --bands .sdlc/bands.yaml \
+            --repo "${{ github.repository }}" \
+            --write-back \
+            --artifact-dir "<artifacts-dir>" \
+            --intent-template .sdlc/intent-template.md

@@ -1,0 +1,8 @@
+{
+  "_note": "Opt-in marker for the sdlc-loop plugin. Delete this file to turn every hook off. Globs support * ? and **; brace expansion is not supported.",
+  "version": 1,
+  "artifactDir": "docs/sdlc",
+  "artifactPaths": ["docs/sdlc/**", "CLAUDE.md", "REVIEW.md", ".claude/sdlc.json"],
+  "scenarioGlobs": ["features/**/*.feature"],
+  "scenarioCommand": null
+}
