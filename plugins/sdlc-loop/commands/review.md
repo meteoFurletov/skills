@@ -2,6 +2,7 @@
 description: Stage 5 — run this repo's REVIEW.md pass over the current diff, checking it against the .feature files rather than a green run.
 argument-hint: [optional — a PR number, branch or path to review]
 allowed-tools: Read, Glob, Grep, Bash(git diff:*), Bash(git log:*), Bash(git status:*), Bash(git show:*), Bash(jq:*), Bash(gh pr view:*), Bash(gh pr diff:*)
+disallowed-tools: Edit Write MultiEdit NotebookEdit
 ---
 
 Run the review pass over: $ARGUMENTS

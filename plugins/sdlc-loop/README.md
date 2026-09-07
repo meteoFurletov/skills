@@ -11,10 +11,9 @@ it. All state is plain markdown, Gherkin and YAML in the project's own git.
 ```
 commands/        one per stage transition, plus init
 skills/
-  sdlc-artifacts        the house rules, for prose asks; also where commands
-                        resolve the shipped templates from
+  sdlc-artifacts        the house rules, for prose asks
   sdlc-watch-writeback  the headless Stage 6 diagnosis
-templates/       the nine shipped artefacts, read on demand
+templates/       the nine shipped artefacts, read via ${CLAUDE_PLUGIN_ROOT}
 hooks/           hooks.json registers all three; each is inert without opt-in
 scripts/watch.py the Stage 6 detector — stdlib + gh, no model in the path
 tests/run.sh     every hook blocking and silent, every detection rule; no network
@@ -50,6 +49,9 @@ except `--watch`.
 | `/sdlc-loop:review` | 5 — the compliance pass | findings |
 | `/sdlc-loop:watch` | 6 — CI drift detection | `bands.yaml`, workflow |
 | `/sdlc-loop:verify` | any — how to tell a healthy run | `CLAUDE.md` block |
+
+Stages chain in one session on request: once its artefact is accepted, `intent`,
+`spec` and `plan` each offer to continue to the next.
 
 Two things keep the artefacts readable. Each links upstream instead of restating
 it, so `spec.md` cites `intent.md` rather than summarising it. And every artefact

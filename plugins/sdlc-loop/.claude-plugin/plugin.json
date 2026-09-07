@@ -1,7 +1,7 @@
 {
   "name": "sdlc-loop",
   "description": "A six-stage AI-native SDLC as commands, skills and opt-in hooks: intent, spec with Gherkin scenarios, plan, build, review, and a deterministic CI-drift watcher. Project-agnostic; every artifact is plain markdown in the project's own git.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "Nikita Furletov",
     "email": "meteofurletov@gmail.com"

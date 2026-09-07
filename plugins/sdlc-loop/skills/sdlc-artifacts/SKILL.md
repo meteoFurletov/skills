@@ -18,10 +18,7 @@ nobody typed one.
 
 ## Where the templates are
 
-The plugin's templates are at `../../templates/` relative to this skill's base
-directory, which is stated at the top of this prompt. That path is the reliable
-route to them: a slash command's body is not interpolated, so a command that
-needs a template invokes this skill and reads the directory from here.
+The plugin's templates are at `${CLAUDE_PLUGIN_ROOT}/templates/`.
 
 ```
 templates/
@@ -48,8 +45,11 @@ single biggest thing keeping these documents readable.
 
 **Write short and stop.** These are read by a person making a decision, and an
 artefact nobody finishes reading gates nothing. Cut a section that has nothing in
-it rather than padding it. Nothing measures this; it is a property of the
-writing, not a limit.
+it rather than padding it. Budgets: `intent.md` at most 100 lines; `spec.md` at
+most 150; `plan.md` at most 120, and only decisions, the scenarios it proves and
+the file list — no restating of the spec and no narrating of third-party facts,
+which go into code comments or a tests assumptions list. If a draft exceeds the
+budget, cut before showing it; if it cannot be cut, the change should be split.
 
 **Name a real owner.** Every artefact carries `Owner:` — the one person who
 accepts it and moves the work on. If you do not know who, ask. A placeholder

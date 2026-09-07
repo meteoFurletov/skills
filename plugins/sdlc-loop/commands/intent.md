@@ -20,19 +20,11 @@ never from your own sense of today.
 
 ## Loading a template
 
-Try in order, and say which route worked:
-
-1. `.claude/sdlc/templates/<name>` in the project.
-2. Invoke the `sdlc-artifacts` skill. Its prompt states its base directory, and
-   the templates sit at `<base>/../../templates/`. This is the primary route — a
-   command body is not interpolated, so `${CLAUDE_PLUGIN_ROOT}` is not available
-   here and neither is it in the shell environment.
-3. `jq -r '(.plugins // .) | to_entries[]|select(.key|startswith("sdlc-loop@"))|.value[0].installPath' ~/.claude/plugins/installed_plugins.json`,
-   then probe both `<installPath>/templates/` and `<installPath>/plugins/sdlc-loop/templates/`.
-4. `plugins/sdlc-loop/templates/` under the current git root.
-
-If all four fail, say which you tried and stop. Never write a template from
-memory — re-deriving it by hand is the drift this plugin exists to stop.
+Read `${CLAUDE_PLUGIN_ROOT}/templates/<name>`. If that path does not exist, fall
+back to the install path from
+`jq -r '(.plugins // .) | to_entries[]|select(.key|startswith("sdlc-loop@"))|.value[0].installPath' ~/.claude/plugins/installed_plugins.json`
+plus `/templates/<name>`. If both fail, say so and stop. Never write a template
+from memory — re-deriving it by hand is the drift this plugin exists to stop.
 
 ## Writing it
 
@@ -58,7 +50,11 @@ page, not to design a solution.
   good outcome, not a lazy one.
 
 Write what is essential and stop. Delete a section with nothing in it rather than
-padding it — this is read by a person deciding whether to fund the work.
+padding it — this is read by a person deciding whether to fund the work. At most
+100 lines: if a draft exceeds that, cut before showing it, and if it cannot be
+cut, the change should be split.
 
 Then show the owner what you wrote and ask whether it is accepted. When it is,
-set `Status: accepted`. Print the path and stop — the spec is a separate run.
+set `Status: accepted`, print the path and ask "Continue to spec now?". On yes,
+read `${CLAUDE_PLUGIN_ROOT}/commands/spec.md` and follow it in this session. On
+no, stop.

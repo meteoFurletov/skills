@@ -14,7 +14,9 @@ plain markdown in git, one directory per change under `<artifacts-dir>/`.
 | `/sdlc-loop:watch` | 6 — CI drift detection | `bands.yaml`, workflow |
 
 Link upstream, never restate it. The spec points at the intent; the plan points
-at both. Write what is essential and stop.
+at both. Write what is essential and stop. Budgets: `intent.md` at most 100
+lines, `spec.md` 150, `plan.md` 120 — a draft that cannot be cut to fit means
+the change should be split.
 
 ### Scenarios are the contract
 
