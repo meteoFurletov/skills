@@ -1,5 +1,5 @@
 ---
-description: Set this repo up for the sdlc-loop — opt-in marker, starter CLAUDE.md and REVIEW.md, and optionally the deploy gate and Stage 6 detector.
+description: Set this repo up for the sdlc-loop — opt-in marker, the facts document, the proposals inbox, starter CLAUDE.md and review policy, and optionally the deploy gate and Stage 6 detector.
 argument-hint: "[--artifacts] [--hooks] [--gate] [--watch]"
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash, Skill, AskUserQuestion
 ---
@@ -24,14 +24,24 @@ from memory — re-deriving it by hand is the drift this plugin exists to stop.
 
 ### --artifacts
 
-Ask where artefacts should live (default `docs/sdlc`) and create it. Merge the
-`CLAUDE.md` template between its `<!-- sdlc-loop:begin -->` and
-`<!-- sdlc-loop:end -->` markers, so re-running updates that block and touches
-nothing else; substitute the real directory for `<artifacts-dir>`. Add the
-`REVIEW.md` template the same way, with the owner's name filled in.
+Ask where artefacts should live (default `docs/sdlc`) and create it. Then:
 
-Leave the "Verifying your work" placeholders alone and say that
-`/sdlc-loop:verify` fills them in by interview.
+- Merge the `CLAUDE.md` template between its `<!-- sdlc-loop:begin -->` and
+  `<!-- sdlc-loop:end -->` markers, so re-running updates that block and touches
+  nothing else; substitute the real paths for `<artifacts-dir>` and
+  `<facts-doc>`. If the block from an earlier version carries a "Verifying your
+  work" table, replace the whole block: the verify commands live in
+  `.claude/sdlc.json` now.
+- Write the facts document from the `estate.md` template at the path the owner
+  chooses (default `docs/estate.md`), with the owner's name. Ask for the names
+  that keep getting corrected in this estate and put them in now; an empty
+  Names section on day one is how the corrections start.
+- Write `<artifactDir>/PROPOSALS.md` from its template.
+- Write `.github/copilot-instructions.md` from the `copilot-instructions.md`
+  template, with the owner's name, and `REVIEW.md` from its template. Tell the
+  owner that Copilot code review reads the former on every pull request, and
+  that a repository ruleset with automatic Copilot review is what makes
+  `/sdlc-loop:deploy` need no manual request.
 
 ### --hooks
 
@@ -45,19 +55,31 @@ Set from what the repo actually looks like:
 
 - `scenarioGlobs` — where `.feature` files are. Look for existing ones; if there
   are none, ask where they will go.
-- `artifactDir` and `artifactPaths` — the artefact directory plus `CLAUDE.md`,
-  `REVIEW.md` and `.claude/sdlc.json`. These last three are artefacts living at
-  the repo root, and leaving them out makes `plan-sync` block every commit that
+- `artifactDir` and `artifactPaths` — the artefact directory plus the facts
+  document, `CLAUDE.md`, `REVIEW.md`, `.github/copilot-instructions.md` and
+  `.claude/sdlc.json`. These are artefacts living outside the artefact
+  directory, and leaving them out makes `plan-sync` block every commit that
   touches them.
+- `facts` — the facts document's path.
+- `deploy` — `"pr"` where changes go through a pull request on GitHub;
+  `"manual"` where this repo's landing pipeline is its own and the loop only
+  prints it.
+- `verify` — leave the four entries `null`; `/sdlc-loop:verify` fills them.
+
+A file from version 1 of this plugin (no `version`, or `version: 1`) is
+upgraded in place: add the missing keys with these defaults, move
+`scenarioCommand` into `verify.scenarios`, and say what moved.
 
 Globs take `*`, `?` and `**`. Brace expansion is not supported.
 
-Then say what the two build-time hooks do, one sentence each: `protect-scenarios`
-blocks writes over an existing `.feature` file and allows new ones, because
-scenarios change at the spec transition and belong to the owner; `plan-sync`
-blocks a commit touching files absent from the `Files that change` list in
-`plan.md` unless `plan.md` is staged with it. Both allow and explain themselves
-when they cannot establish their condition, and neither ever pauses for a human.
+Then say what the three build-time hooks do, one sentence each:
+`protect-scenarios` blocks an Edit or Write over an existing `.feature` file and
+allows new ones; `scenario-commit` blocks a commit that modifies or deletes an
+existing `.feature` file unless the active change's `spec.md` is staged with it,
+whatever tool wrote the file; `plan-sync` blocks a commit touching files absent
+from the `Files that change` list in `plan.md` unless `plan.md` is staged with
+it. All three allow and explain themselves when they cannot establish their
+condition, and none ever pauses for a human.
 
 ### --gate
 

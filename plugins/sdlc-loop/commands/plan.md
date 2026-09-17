@@ -1,5 +1,5 @@
 ---
-description: Stage 3 — plan the implementation from an accepted spec.md, naming the files that change and the scenarios the work proves.
+description: Stage 3, Build, first half — plan the implementation from an accepted spec.md in plan mode, naming the files that change and the scenarios the work proves.
 argument-hint: [optional — which part of the spec to plan]
 allowed-tools: Read, Write, Glob, Grep, Bash(date:*), Bash(jq:*), Bash(git log:*), Bash(git status:*), Bash(ls:*), Skill, AskUserQuestion
 disallowed-tools: Edit MultiEdit NotebookEdit
@@ -16,11 +16,17 @@ you find yourself wanting to change code, the plan is not finished.
 
 Read `.claude/sdlc.json` at the git root. If it is absent, say that this repo has
 not run `/sdlc-loop:init` and that the hooks are inert here, then continue with
-the defaults `artifactDir: docs/sdlc` and `scenarioGlobs: ["features/**/*.feature"]`.
+the defaults `artifactDir: docs/sdlc`, `scenarioGlobs: ["features/**/*.feature"]`
+and no facts document.
 
 Artefacts live one directory per change: `<artifactDir>/<NNN>-<slug>/`, with
 `<artifactDir>/CURRENT` naming the active one. Take the date from `date +%F`,
 never from your own sense of today.
+
+Read the facts document named by `facts` before drafting a word. It holds the
+estate's real names and the facts the code does not say; a draft that spells a
+system, repo or table differently from that file is wrong before the owner reads
+it. If a name you need is missing there, ask, and add it there first.
 
 ## Loading a template
 
@@ -33,15 +39,13 @@ from memory — re-deriving it by hand is the drift this plugin exists to stop.
 ## Writing it
 
 Read the change's `spec.md`. If it is missing or not `accepted`, say so and
-stop. Read the `.feature` files it points at. Then read the code that will
-actually change — a plan written from the spec alone names files that do not
-exist.
+stop. Read the `.feature` files it points at and their bindings. Then read the
+code that will actually change — a plan written from the spec alone names files
+that do not exist.
 
-Requirements and design live in `spec.md`. Do not restate them. `plan.md` is at
-most 120 lines and carries only decisions, the scenarios it proves and the file
-list — no restating of the spec and no narrating of third-party facts, which go
-into code comments or a tests assumptions list. If a draft exceeds that, cut
-before showing it; if it cannot be cut, the change should be split.
+Requirements and design live in `spec.md`. Do not restate them. `plan.md`
+carries decisions, the scenarios it proves, the file list, the risks, and an
+empty Departures section for Build to fill.
 
 Two sections earn their place by being read by something downstream:
 
@@ -51,11 +55,31 @@ Two sections earn their place by being read by something downstream:
   no scenario, stop and go back to `/sdlc-loop:spec`.
 - **Files that change** — repo-relative paths, one per line, no prose. The
   `plan-sync` hook reads this list, so it has to be real. A directory path
-  covers everything beneath it. Roughly right matters more than exactly right: a
-  departure is fine, an unnoticed departure is not.
+  covers everything beneath it, but a list that is only directories tells the
+  reader nothing: name the files you expect, and let a departure be a departure.
+  A path in another repo is listed under its own sub-heading and is not
+  checked by the hook.
 
-Present the plan for approval. Once approved, write
-`<artifactDir>/<NNN>-<slug>/plan.md`, confirm `CURRENT` points at it, print the
-path and ask "Continue to Build now?". On yes, Build is yours in this session
-against the plan; run the verify commands in `CLAUDE.md` before claiming it
-works. On no, stop.
+Size comes from scope, not from cutting. The budget below is a signal: if a
+draft is over it, say so and say why, and offer to split rather than trimming
+the words. Concision comes from the rules: one idea per sentence, no restating
+an upstream file, no narrating third-party facts (those go to the facts document
+or a code comment), and no section kept for the sake of the template — delete
+one with nothing in it.
+
+Budget: about 100 lines.
+
+## Showing it
+
+Markdown artefacts are shown by path, never pasted: the owner reads the file.
+`.feature` files are the exception and are printed in full, one file at a time,
+in a fenced `gherkin` block, every scenario included. Acceptance is the word
+"accepted" from the owner; an answer to a scoped question is not acceptance, and
+neither is silence. Write nothing to disk that the owner has not seen.
+
+Present the plan by path. The owner's read is the gate for this stage: they may
+say accepted, or ask for a change. Once accepted, write
+`<artifactDir>/<NNN>-<slug>/plan.md` with `Status: accepted`, confirm `CURRENT`
+points at it, print the path and ask "Continue to build now?". On yes, read
+`${CLAUDE_PLUGIN_ROOT}/commands/build.md` and follow it in this session. On no,
+stop.

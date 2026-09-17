@@ -17,6 +17,11 @@
         "hooks": [
           {
             "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/scenario-commit.sh\" \"${CLAUDE_PROJECT_DIR}\"",
+            "timeout": 5
+          },
+          {
+            "type": "command",
             "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/scripts/plan-sync.sh\" \"${CLAUDE_PROJECT_DIR}\"",
             "timeout": 5
           }

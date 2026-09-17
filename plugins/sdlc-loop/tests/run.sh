@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # Hook and watcher tests. A scratch git repo per case, no network.
+# Every hook is exercised both blocking and staying silent, and every detection
+# rule in isolation.
 set -uo pipefail
 
 HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
@@ -93,6 +95,33 @@ check "plan.md staged alongside is silent" silent "$(hook plan-sync.sh "$COMMIT"
 mv "$REPO/docs/sdlc/001-login/plan.md" "$TMP/plan.bak"
 check "no plan.md allows with a note" note "$(hook plan-sync.sh "$COMMIT")"
 mv "$TMP/plan.bak" "$REPO/docs/sdlc/001-login/plan.md"
+
+echo
+echo "scenario-commit"
+git -C "$REPO" reset -q
+git -C "$REPO" add -A && git -C "$REPO" commit -q -m base
+printf 'Feature: login\n  Scenario: x\n' > "$REPO/features/login.feature"
+git -C "$REPO" add features/login.feature
+check "a modified .feature without spec.md is denied" deny "$(hook scenario-commit.sh "$COMMIT")"
+check "a non-commit Bash call is silent" silent \
+  "$(hook scenario-commit.sh '{"tool_name":"Bash","tool_input":{"command":"git status"}}')"
+printf '# Spec\n' > "$REPO/docs/sdlc/001-login/spec.md"; git -C "$REPO" add docs/sdlc/001-login/spec.md
+check "a modified .feature with spec.md staged is silent" silent "$(hook scenario-commit.sh "$COMMIT")"
+git -C "$REPO" reset -q; git -C "$REPO" checkout -q -- features/login.feature; rm -f "$REPO/docs/sdlc/001-login/spec.md"
+printf 'Feature: signup\n' > "$REPO/features/auth/signup.feature"; git -C "$REPO" add features/auth/signup.feature
+check "a new .feature is silent" silent "$(hook scenario-commit.sh "$COMMIT")"
+git -C "$REPO" reset -q; rm -f "$REPO/features/auth/signup.feature"
+git -C "$REPO" rm -q features/login.feature
+check "a deleted .feature without spec.md is denied" deny "$(hook scenario-commit.sh "$COMMIT")"
+git -C "$REPO" reset -q; git -C "$REPO" checkout -q -- features/login.feature
+printf 'x\n' >> "$REPO/src/app.py"; git -C "$REPO" add src/app.py
+check "a code-only commit is silent" silent "$(hook scenario-commit.sh "$COMMIT")"
+git -C "$REPO" reset -q; git -C "$REPO" checkout -q -- src/app.py
+mv "$REPO/.claude/sdlc.json" "$REPO/.claude/off.json"
+git -C "$REPO" rm -q features/login.feature
+check "no opt-in marker is silent" silent "$(hook scenario-commit.sh "$COMMIT")"
+git -C "$REPO" reset -q; git -C "$REPO" checkout -q -- features/login.feature
+mv "$REPO/.claude/off.json" "$REPO/.claude/sdlc.json"
 
 echo
 echo "deploy-gate"

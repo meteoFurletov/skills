@@ -2,8 +2,8 @@
 
 From `intent.md` (<date>). Owner: <name>. Status: draft. Date: <YYYY-MM-DD>.
 
-Problem, rationale and constraints live in `intent.md` and are not repeated
-here. This file adds requirements and a design.
+Problem and outcome live in `intent.md` and are not repeated here. This file
+adds requirements, constraints and a design.
 
 ## Requirements
 
@@ -11,10 +11,17 @@ here. This file adds requirements and a design.
 
 - R1 — <statement>
 
+## Constraints
+
+- <what the design must respect: systems, names, limits, policies>
+
 ## Scenarios
 
-<One line per `.feature` file written at this transition: its path and what it
-covers. Or: "No scenario changes. The existing scenarios must still pass.">
+<One line per `.feature` file written at this transition: its path, its binding
+file, and what it covers. Aim for one or two files per change, about eight
+scenarios each. Or: "No scenario changes. The existing scenarios must still pass.">
+
+- `<path>.feature` ← `<binding file>` — <the capability>
 
 ## Design
 
@@ -23,10 +30,6 @@ covers. Or: "No scenario changes. The existing scenarios must still pass.">
 ## Non-goals
 
 <What this deliberately does not do.>
-
-## Flagged concerns
-
-<What the owner should see before Build. "None outstanding. Ready for Build.">
 
 ## Acceptance
 

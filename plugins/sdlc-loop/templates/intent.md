@@ -4,16 +4,18 @@ Author: <name>. Owner: <name>. Status: draft. Date: <YYYY-MM-DD>.
 
 ## Problem
 
-<What is wrong now, in the originator's own words. Evidence, not adjectives.>
+<What is wrong now, in the originator's own words. Evidence, not adjectives.
+Name things in the estate by their real names; name no code.>
 
-## Proposed outcome
+## Outcome
 
 <What is true once this ships. Not how.>
 
-## Scenarios
+## Behaviours
 
-<One line per behaviour the change must satisfy, in plain words. The spec
-transition turns these into Gherkin — no Given/When/Then here.>
+<One line per behaviour the change must satisfy, in plain words. The design
+transition turns these into Gherkin — no Given/When/Then here. More than about
+eight lines, or more than one capability, is a programme: split it (see below).>
 
 - <behaviour>
 
@@ -21,14 +23,24 @@ transition turns these into Gherkin — no Given/When/Then here.>
 dependency bump, performance work — delete the list and write exactly:
 "No scenario changes. The existing scenarios must still pass.">
 
-## Affected users and systems
+## Out of scope
 
-<Who is touched, and which systems.>
-
-## Constraints
-
-- <constraint>
+- <what this deliberately does not do>
 
 ## Open questions
 
-<What blocks the spec. "None outstanding. Ready for Spec." when there are none.>
+<What blocks the design. "None outstanding. Ready for design." when there are none.>
+
+<!--
+Status is one of: draft, accepted, split, parked, rejected.
+
+A split intent keeps this file as the parent, sets `Status: split`, replaces
+Behaviours with the ordered list of child changes, one line each:
+
+## Children
+
+1. `<NNN>-<slug>` — <the one capability it carries>
+
+CURRENT never points at a split parent. A parked or rejected intent carries one
+line under the status saying why, and nothing downstream is written.
+-->

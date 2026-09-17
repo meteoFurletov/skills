@@ -1,5 +1,5 @@
 # Owner: <name>. From: spec.md R<n>.
-# Scenarios are the contract. They change at the spec transition, not during
+# Scenarios are the contract. They change at the design transition, not during
 # Build — a hook blocks edits to this file.
 
 Feature: <the capability, not the implementation>

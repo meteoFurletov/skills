@@ -2,37 +2,32 @@
 ## SDLC loop
 
 This repo runs the six-stage loop from the `sdlc-loop` plugin. Artefacts are
-plain markdown in git, one directory per change under `<artifacts-dir>/`.
+plain markdown in git, one directory per change under `<artifacts-dir>/`, with
+`CURRENT` naming the active one.
 
-| Command | Stage | Writes |
+| Stage | Command | Writes |
 | --- | --- | --- |
-| `/sdlc-loop:intent` | 1 — what changes and why | `intent.md` |
-| `/sdlc-loop:spec` | 2 — requirements and the contract | `spec.md` + `.feature` |
-| `/sdlc-loop:plan` | 3 — approach and files that change | `plan.md` |
-| — | 4 — Build, against the plan | code |
-| `/sdlc-loop:review` | 5 — the compliance pass | findings |
-| `/sdlc-loop:watch` | 6 — CI drift detection | `bands.yaml`, workflow |
+| 1 Plan | `/sdlc-loop:intent` | `intent.md` |
+| 2 Design | `/sdlc-loop:spec` | `spec.md`, `.feature` files, red bindings |
+| 3 Build | `/sdlc-loop:plan`, then `/sdlc-loop:build` | `plan.md`, code |
+| 4 Test | `/sdlc-loop:test` | nothing; a fix or a stop, then `Status: built` |
+| 5 Deploy | `/sdlc-loop:deploy` | the pull request, fixes from its review |
+| 6 Maintain | `/sdlc-loop:watch` | `bands.yaml`, the detector |
 
-Link upstream, never restate it. The spec points at the intent; the plan points
-at both. Write what is essential and stop. Budgets: `intent.md` at most 100
-lines, `spec.md` 150, `plan.md` 120 — a draft that cannot be cut to fit means
-the change should be split.
+Read `<facts-doc>` before drafting anything: it holds the estate's real names,
+the facts the code does not say, and how changes land. A correction that
+repeats goes to `<artifacts-dir>/PROPOSALS.md`, and `/sdlc-loop:reflect` turns
+that inbox into the next version of the loop.
 
-### Scenarios are the contract
+Link upstream, never restate it. Write what is essential and stop. Size comes
+from scope: one change is one capability, one or two `.feature` files. An
+intent that needs more is split, not cut.
 
-`.feature` files are the executable spec. They change at the spec transition and
-nowhere else — a hook blocks edits to an existing one. Unit tests are the
-opposite: implementation detail, yours to add, change or delete freely, and
-never evidence on their own that a scenario holds.
+`.feature` files and the Then assertions in their bindings are the contract.
+They change at the design transition and nowhere else; hooks block both an edit
+and a commit that moves them without `spec.md`. Unit tests and binding glue are
+implementation detail, yours to change freely.
 
-### Verifying your work
-
-Run these before claiming a change works. `/sdlc-loop:verify` fills them in.
-
-| What | Command | Healthy output |
-| --- | --- | --- |
-| Build | `<build command>` | `<the real last line>` |
-| Test | `<test command>` | `<the real last line>` |
-| Lint | `<lint command>` | `<the real last line>` |
-| Scenarios | `<scenario command, or "none — the .feature files are the checklist">` | `<the real last line>` |
+The verify commands live under `verify` in `.claude/sdlc.json`. Build runs them
+until green; nothing about them belongs in this file.
 <!-- sdlc-loop:end -->

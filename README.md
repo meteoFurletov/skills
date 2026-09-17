@@ -21,7 +21,7 @@ then `/plugin install <name>@meteof-skills`.
 | Plugin | What it is |
 | --- | --- |
 | `meteof-skills` | The skills below. The repo root is this plugin. |
-| [sdlc-loop](plugins/sdlc-loop/) | A six-stage AI-native SDLC — intent, spec with Gherkin scenarios, plan, build, review, watch — as slash commands with opt-in hooks. |
+| [sdlc-loop](plugins/sdlc-loop/) | The six-stage AI-native SDLC playbook — intent, design with Gherkin scenarios, plan and build, test, deploy, maintain — as slash commands with opt-in hooks and a reflect step. |
 
 To work on a skill locally without installing, symlink it:
 

@@ -24,3 +24,9 @@ list, so it has to be real. A directory path covers everything beneath it.>
 ## Risks and rollback
 
 <What could go wrong, and how to undo it.>
+
+## Departures
+
+<Empty at approval. Build appends one line per departure from the approach or
+the file list, with the reason, as it happens. Test sets `Status: built` here
+when the verifier is clean.>

@@ -16,7 +16,7 @@
     {
       "name": "sdlc-loop",
       "source": "./plugins/sdlc-loop",
-      "description": "A six-stage AI-native SDLC \u2014 intent, spec with Gherkin scenarios, plan, build, review, watch \u2014 as slash commands with opt-in hooks.",
+      "description": "The six-stage AI-native SDLC playbook — intent, design with Gherkin scenarios, plan and build, test, deploy, maintain — as slash commands with opt-in hooks and a reflect step.",
       "category": "productivity"
     }
   ]
