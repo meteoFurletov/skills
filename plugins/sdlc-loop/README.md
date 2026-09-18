@@ -63,8 +63,9 @@ flowchart LR
   R[PROPOSALS.md → reflect] -.-> next[next version]
 ```
 
-Stages chain in one session on request: once its artefact is accepted, each
-stage offers to continue to the next, and Build runs into Test on its own.
+Stages chain in one session: intent and spec offer to continue once accepted,
+an accepted plan is the decision to build and runs into Build without a second
+question, and Build runs into Test on its own.
 
 Three things keep the artefacts short. Each links upstream instead of restating
 it. Every artefact names one owner. And size comes from scope: one change is one

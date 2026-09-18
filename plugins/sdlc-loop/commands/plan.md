@@ -78,8 +78,8 @@ in a fenced `gherkin` block, every scenario included. Acceptance is the word
 neither is silence. Write nothing to disk that the owner has not seen.
 
 Present the plan by path. The owner's read is the gate for this stage: they may
-say accepted, or ask for a change. Once accepted, write
+say accepted, or ask for a change. Accepting the plan is the decision to build
+it — there is no second question. Once accepted, write
 `<artifactDir>/<NNN>-<slug>/plan.md` with `Status: accepted`, confirm `CURRENT`
-points at it, print the path and ask "Continue to build now?". On yes, read
-`${CLAUDE_PLUGIN_ROOT}/commands/build.md` and follow it in this session. On no,
-stop.
+points at it, print the path, then read `${CLAUDE_PLUGIN_ROOT}/commands/build.md`
+and follow it in this session. Stop only if the owner says to build later.
