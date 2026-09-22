@@ -9,7 +9,9 @@ plugin from a marketplace that lives in this repo. The marketplace also lists
 
 - `.claude-plugin/marketplace.json` — marketplace manifest, one entry per plugin.
   The `meteof-skills` entry uses `"source": "./"` because the repo root *is* that
-  plugin; `balka` points at `meteoFurletov/balka` by GitHub source.
+  plugin; `balka` points at `https://github.com/meteoFurletov/balka.git` by
+  `url` source. Not the `github` shorthand: that clones over SSH and fails for
+  anyone without GitHub SSH keys.
 - `.claude-plugin/plugin.json` — the `meteof-skills` manifest. Bump `version` on
   every release.
 - `skills/<name>/SKILL.md` — one directory per skill. Nothing else in `skills/`
