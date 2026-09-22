@@ -1,7 +1,8 @@
 # skills
 
-Agent skills and process tooling I reuse across projects, shipped as two plugins
-from one marketplace — install either, and updates arrive together.
+Agent skills I reuse across projects, shipped as the `meteof-skills` plugin from
+a marketplace that also lists [balka](https://github.com/meteoFurletov/balka), my
+SDLC-loop plugin, which lives in its own repo.
 
 Private / unshareable skills live in the sibling repo `skills-private`.
 
@@ -10,7 +11,7 @@ Private / unshareable skills live in the sibling repo `skills-private`.
 ```bash
 claude plugin marketplace add meteoFurletov/skills
 claude plugin install meteof-skills@meteof-skills
-claude plugin install sdlc-loop@meteof-skills
+claude plugin install balka@meteof-skills
 ```
 
 Or, from inside a Claude Code session, `/plugin marketplace add meteoFurletov/skills`
@@ -21,7 +22,7 @@ then `/plugin install <name>@meteof-skills`.
 | Plugin | What it is |
 | --- | --- |
 | `meteof-skills` | The skills below. The repo root is this plugin. |
-| [sdlc-loop](plugins/sdlc-loop/) | The six-stage AI-native SDLC playbook — intent, design with Gherkin scenarios, plan and build, test, deploy, maintain — as slash commands with opt-in hooks and a reflect step. |
+| [balka](https://github.com/meteoFurletov/balka) | The six-stage AI-native SDLC playbook — intent, design with Gherkin scenarios, plan and build, test, deploy, maintain — as slash commands with opt-in hooks and a reflect step. |
 
 To work on a skill locally without installing, symlink it:
 

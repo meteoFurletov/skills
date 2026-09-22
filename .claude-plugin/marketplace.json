@@ -14,8 +14,11 @@
       "category": "productivity"
     },
     {
-      "name": "sdlc-loop",
-      "source": "./plugins/sdlc-loop",
+      "name": "balka",
+      "source": {
+        "source": "github",
+        "repo": "meteoFurletov/balka"
+      },
       "description": "The six-stage AI-native SDLC playbook — intent, design with Gherkin scenarios, plan and build, test, deploy, maintain — as slash commands with opt-in hooks and a reflect step.",
       "category": "productivity"
     }
